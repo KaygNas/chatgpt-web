@@ -10,26 +10,26 @@ services:
       # pick one of two
       OPENAI_API_KEY: YOUR_OPENAI_API_KEY
       # pick one of two
-      OPENAI_ACCESS_TOKEN:
+      #  OPENAI_ACCESS_TOKEN:
       # API interface address, optional, available when OPENAI_API_KEY is set
-      OPENAI_API_BASE_URL:
+      # OPENAI_API_BASE_URL:
       # API model, optional, available when OPENAI_API_KEY is set
-      OPENAI_API_MODEL:
+      # OPENAI_API_MODEL:
       # reverse proxy, optional
-      API_REVERSE_PROXY:
+      # API_REVERSE_PROXY:
       # Access permission key, optional
-      AUTH_SECRET_KEY:
+      # AUTH_SECRET_KEY:
       # The maximum number of requests per hour, optional, default unlimited
       MAX_REQUEST_PER_HOUR: 0
       # timeout in milliseconds, optional
       TIMEOUT_MS: 60000
       # Socks proxy, optional, works with SOCKS_PROXY_PORT
-      SOCKS_PROXY_HOST:
+      # SOCKS_PROXY_HOST:
       # Socks proxy port, optional, effective when combined with SOCKS_PROXY_HOST
-      SOCKS_PROXY_PORT:
+      # SOCKS_PROXY_PORT:
       # Socks proxy username, optional, effective when combined with SOCKS_PROXY_HOST & SOCKS_PROXY_PORT
-      SOCKS_PROXY_USERNAME:
+      # SOCKS_PROXY_USERNAME:
       # Socks proxy password, optional, effective when combined with SOCKS_PROXY_HOST & SOCKS_PROXY_PORT
-      SOCKS_PROXY_PASSWORD:
+      # SOCKS_PROXY_PASSWORD:
       # HTTPS_PROXY proxy, optional
-      HTTPS_PROXY:
+      # HTTPS_PROXY:
