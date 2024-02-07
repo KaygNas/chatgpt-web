@@ -40,19 +40,19 @@ watch(
 </script>
 
 <template>
+  <AgentSider />
   <NLayoutSider
     :collapsed="collapsed"
     :collapsed-width="0"
     :width="320"
     :show-trigger="isMobile ? false : 'arrow-circle'"
-    collapse-mode="transform"
+    collapse-mode="width"
     position="static"
     bordered
     :style="getMobileClass"
     @update-collapsed="handleUpdateCollapsed"
   >
     <div class="flex flex-row h-full">
-      <AgentSider />
       <ChatHistorySider class="flex-1" />
     </div>
   </NLayoutSider>

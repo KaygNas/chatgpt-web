@@ -6,7 +6,7 @@ const LOCAL_NAME = 'chatStorage'
 const getLocalName = (agentUuid: number) => `${LOCAL_NAME}-${agentUuid}`
 
 export function defaultState(): Chat.ChatState {
-  const uuid = 1002
+  const uuid = Date.now()
   return {
     active: uuid,
     usingContext: true,
