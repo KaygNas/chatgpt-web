@@ -15,10 +15,13 @@ const menuOptions = computed<MenuOption[]>(() => {
     }
   })
 })
+const handleAgentChange = (uuid: number) => {
+  agentStore.setActive(uuid)
+}
 </script>
 
 <template>
-  <NMenu v-model:value="agentStore.state.active" :options="menuOptions" />
+  <NMenu :value="agentStore.state.active" :options="menuOptions" @update:value="handleAgentChange" />
 </template>
 
 <style lang="scss" scoped></style>

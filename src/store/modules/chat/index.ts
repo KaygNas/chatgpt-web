@@ -1,11 +1,20 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs, watch } from 'vue'
+import { useAgentStore } from '../agent'
 import { defaultState, getLocalState, setLocalState } from './helper'
 import { router } from '@/router'
 import { t } from '@/locales'
 
 export const useChatStore = defineStore('chat-store', () => {
-  const state = reactive<Chat.ChatState>(getLocalState())
+  const agentStore = useAgentStore()
+  const state = reactive<Chat.ChatState>(getLocalState(agentStore.state.active))
+  watch(
+    () => agentStore.state.active,
+    () => {
+      Object.assign(state, getLocalState(agentStore.state.active))
+      reloadRoute(state.active)
+    },
+  )
 
   const getChatHistoryByCurrentActive = computed(() => {
     const index = state.history.findIndex(item => item.uuid === state.active)
@@ -186,13 +195,13 @@ export const useChatStore = defineStore('chat-store', () => {
     recordState()
   }
 
-  async function reloadRoute(uuid?: number) {
+  async function reloadRoute(uuid?: number | null) {
     recordState()
     await router.push({ name: 'Chat', params: { uuid } })
   }
 
   function recordState() {
-    setLocalState(state)
+    setLocalState(state, agentStore.state.active)
   }
   return { ...toRefs(state), getChatByUuid, getChatHistoryByCurrentActive, setUsingContext, addHistory, updateHistory, deleteHistory, setActive, getChatByUuidAndIndex, addChatByUuid, updateChatByUuid, updateChatSomeByUuid, deleteChatByUuid, clearChatByUuid, clearHistory }
 })

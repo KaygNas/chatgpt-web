@@ -31,9 +31,9 @@ const { addChat, updateChat, updateChatSome, getChatByUuidAndIndex } = useChat()
 const { scrollRef, scrollToBottom, scrollToBottomIfAtBottom } = useScroll()
 const { usingContext, toggleUsingContext } = useUsingContext()
 
-const { uuid } = route.params as { uuid: string }
+const uuid = computed(() => Number(route.params.uuid))
 
-const dataSources = computed(() => chatStore.getChatByUuid(+uuid))
+const dataSources = computed(() => chatStore.getChatByUuid(uuid.value))
 const conversationList = computed(() => dataSources.value.filter(item => (!item.inversion && !!item.conversationOptions)))
 
 const prompt = ref<string>('')
@@ -49,7 +49,7 @@ const { promptList: promptTemplate } = storeToRefs<any>(promptStore)
 // 未知原因刷新页面，loading 状态不会重置，手动重置
 dataSources.value.forEach((item, index) => {
   if (item.loading)
-    updateChatSome(+uuid, index, { loading: false })
+    updateChatSome(uuid.value, index, { loading: false })
 })
 
 function handleSubmit() {
@@ -68,7 +68,7 @@ async function onConversation() {
   controller = new AbortController()
 
   addChat(
-    +uuid,
+    uuid.value,
     {
       dateTime: new Date().toLocaleString(),
       text: message,
@@ -90,7 +90,7 @@ async function onConversation() {
     options = { ...lastContext }
 
   addChat(
-    +uuid,
+    uuid.value,
     {
       dateTime: new Date().toLocaleString(),
       text: t('chat.thinking'),
@@ -121,7 +121,7 @@ async function onConversation() {
           try {
             const data = JSON.parse(chunk)
             updateChat(
-              +uuid,
+              uuid.value,
               dataSources.value.length - 1,
               {
                 dateTime: new Date().toLocaleString(),
@@ -148,7 +148,7 @@ async function onConversation() {
           }
         },
       })
-      updateChatSome(+uuid, dataSources.value.length - 1, { loading: false })
+      updateChatSome(uuid.value, dataSources.value.length - 1, { loading: false })
     }
 
     await fetchChatAPIOnce()
@@ -158,7 +158,7 @@ async function onConversation() {
 
     if (error.message === 'canceled') {
       updateChatSome(
-        +uuid,
+        uuid.value,
         dataSources.value.length - 1,
         {
           loading: false,
@@ -168,11 +168,11 @@ async function onConversation() {
       return
     }
 
-    const currentChat = getChatByUuidAndIndex(+uuid, dataSources.value.length - 1)
+    const currentChat = getChatByUuidAndIndex(uuid.value, dataSources.value.length - 1)
 
     if (currentChat?.text && currentChat.text !== '') {
       updateChatSome(
-        +uuid,
+        uuid.value,
         dataSources.value.length - 1,
         {
           text: `${currentChat.text}\n[${errorMessage}]`,
@@ -184,7 +184,7 @@ async function onConversation() {
     }
 
     updateChat(
-      +uuid,
+      uuid.value,
       dataSources.value.length - 1,
       {
         dateTime: new Date().toLocaleString(),
@@ -221,7 +221,7 @@ async function onRegenerate(index: number) {
   loading.value = true
 
   updateChat(
-    +uuid,
+    uuid.value,
     index,
     {
       dateTime: new Date().toLocaleString(),
@@ -252,7 +252,7 @@ async function onRegenerate(index: number) {
           try {
             const data = JSON.parse(chunk)
             updateChat(
-              +uuid,
+              uuid.value,
               index,
               {
                 dateTime: new Date().toLocaleString(),
@@ -277,14 +277,14 @@ async function onRegenerate(index: number) {
           }
         },
       })
-      updateChatSome(+uuid, index, { loading: false })
+      updateChatSome(uuid.value, index, { loading: false })
     }
     await fetchChatAPIOnce()
   }
   catch (error: any) {
     if (error.message === 'canceled') {
       updateChatSome(
-        +uuid,
+        uuid.value,
         index,
         {
           loading: false,
@@ -296,7 +296,7 @@ async function onRegenerate(index: number) {
     const errorMessage = error?.message ?? t('common.wrong')
 
     updateChat(
-      +uuid,
+      uuid.value,
       index,
       {
         dateTime: new Date().toLocaleString(),
@@ -366,7 +366,7 @@ function handleDelete(index: number) {
     positiveText: t('common.yes'),
     negativeText: t('common.no'),
     onPositiveClick: () => {
-      chatStore.deleteChatByUuid(+uuid, index)
+      chatStore.deleteChatByUuid(uuid.value, index)
     },
   })
 }
@@ -381,7 +381,7 @@ function handleClear() {
     positiveText: t('common.yes'),
     negativeText: t('common.no'),
     onPositiveClick: () => {
-      chatStore.clearChatByUuid(+uuid)
+      chatStore.clearChatByUuid(uuid.value)
     },
   })
 }

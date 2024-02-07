@@ -3,6 +3,8 @@ import { t } from '@/locales'
 
 const LOCAL_NAME = 'chatStorage'
 
+const getLocalName = (agentUuid: number) => `${LOCAL_NAME}-${agentUuid}`
+
 export function defaultState(): Chat.ChatState {
   const uuid = 1002
   return {
@@ -13,11 +15,11 @@ export function defaultState(): Chat.ChatState {
   }
 }
 
-export function getLocalState(): Chat.ChatState {
-  const localState = ss.get(LOCAL_NAME)
+export function getLocalState(agentUuid: number): Chat.ChatState {
+  const localState = ss.get(getLocalName(agentUuid))
   return { ...defaultState(), ...localState }
 }
 
-export function setLocalState(state: Chat.ChatState) {
-  ss.set(LOCAL_NAME, state)
+export function setLocalState(state: Chat.ChatState, agentUuid: number) {
+  ss.set(getLocalName(agentUuid), state)
 }
