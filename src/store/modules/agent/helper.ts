@@ -1,23 +1,14 @@
-import { ss } from '@/utils/storage'
-import { t } from '@/locales'
-
-const LOCAL_NAME = 'agentStorage'
-
-export function defaultState(): Chat.ChatState {
-  const uuid = 1002
+export function defaultState(): Agent.AgentState {
+  const uuid = 0
+  const agentList: Agent.AgentState['agentList'] = Array.from({ length: 7 }).map((_, i) => {
+    return {
+      uuid: i,
+      name: `Agent${String(i)}`,
+      icon: 'ri:collage-fill',
+    }
+  })
   return {
     active: uuid,
-    usingContext: true,
-    history: [{ uuid, title: t('chat.newChatTitle'), isEdit: false }],
-    chat: [{ uuid, data: [] }],
+    agentList,
   }
-}
-
-export function getLocalState(): Chat.ChatState {
-  const localState = ss.get(LOCAL_NAME)
-  return { ...defaultState(), ...localState }
-}
-
-export function setLocalState(state: Chat.ChatState) {
-  ss.set(LOCAL_NAME, state)
 }

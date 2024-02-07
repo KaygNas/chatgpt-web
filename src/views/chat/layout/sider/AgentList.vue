@@ -1,19 +1,24 @@
 <script lang='ts' setup>
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
+import { computed } from 'vue'
 import { useIconRender } from '@/hooks/useIconRender'
+import { useAgentStore } from '@/store'
 const { iconRender } = useIconRender()
-const menuOptions: MenuOption[] = Array.from({ length: 7 }).map((_, i) => {
-  return {
-    label: `Agent${String(i)}`,
-    key: i,
-    icon: iconRender({ icon: 'ri:collage-fill' }),
-  }
+const agentStore = useAgentStore()
+const menuOptions = computed<MenuOption[]>(() => {
+  return agentStore.state.agentList.map((agent) => {
+    return {
+      label: agent.name,
+      key: agent.uuid,
+      icon: iconRender({ icon: agent.icon }),
+    }
+  })
 })
 </script>
 
 <template>
-  <NMenu :options="menuOptions" />
+  <NMenu v-model:value="agentStore.state.active" :options="menuOptions" />
 </template>
 
 <style lang="scss" scoped></style>
