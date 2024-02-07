@@ -225,7 +225,7 @@ async function onRegenerate(index: number) {
     index,
     {
       dateTime: new Date().toLocaleString(),
-      text: '',
+      text: t('chat.thinking'),
       inversion: false,
       error: false,
       loading: true,
