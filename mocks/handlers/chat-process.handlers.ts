@@ -1,6 +1,7 @@
 import { HttpResponse, http } from 'msw'
 import HAORIZI_TEXT from './haorizi.md?raw'
 import CODE_EXAMPLE_TEXT from './code-example.md?raw'
+import CHATGLM_README_TEXT from './chatglm-readme.md?raw'
 import type { ChatMessage } from '@/../service/src/chatgpt'
 
 const sleep = async (ms: number) => {
@@ -56,17 +57,19 @@ const handlers = [
   http.post('/api/chat-process', async ({ request }) => {
     const requestData: any = await request.json()
     const agentUuid = requestData.options.agentUuid
-    if (agentUuid === 0) {
-      const response = createStreamResponse({
-        markdownText: CODE_EXAMPLE_TEXT,
-      })
-      return response
-    }
-    else {
-      const response = createStreamResponse({
-        markdownText: HAORIZI_TEXT,
-      })
-      return response
+    switch (agentUuid) {
+      case 0:
+        return createStreamResponse({
+          markdownText: CODE_EXAMPLE_TEXT,
+        })
+      case 1:
+        return createStreamResponse({
+          markdownText: CHATGLM_README_TEXT,
+        })
+      default:
+        return createStreamResponse({
+          markdownText: HAORIZI_TEXT,
+        })
     }
   }),
 ]

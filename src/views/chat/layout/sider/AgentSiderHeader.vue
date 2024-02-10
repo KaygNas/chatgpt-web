@@ -3,10 +3,12 @@ import { UserAvatar } from '@/components/common'
 </script>
 
 <template>
-  <header class="flex items-center justify-between min-w-0 p-4 overflow-hidden border-b dark:border-neutral-800">
-    <div class="flex-1 flex-shrink-0 overflow-hidden">
+  <header class="flex items-center min-w-0 p-4 overflow-hidden border-b dark:border-neutral-800">
+    <div class="flex-shrink-0 overflow-hidden">
       <UserAvatar />
     </div>
-    WenDi
+    <div class="flex-1 p-4 text-xl font-bold">
+      问迪AI
+    </div>
   </header>
 </template>
