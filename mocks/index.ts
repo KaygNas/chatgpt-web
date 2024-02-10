@@ -8,7 +8,8 @@ const worker = setupWorker(...handlers)
 
 export const setupMsw = async () => {
   if (import.meta.env.PROD) {
-    // do nothing
+    // TODO remove
+    await worker.start({ onUnhandledRequest: 'bypass' })
   }
   else {
     await worker.start({ onUnhandledRequest: 'bypass' })
