@@ -1,8 +1,8 @@
 import { HttpResponse, http } from 'msw'
+import type { ChatMessage } from 'chatgpt'
 import HAORIZI_TEXT from './haorizi.md?raw'
 import CODE_EXAMPLE_TEXT from './code-example.md?raw'
 import CHATGLM_README_TEXT from './chatglm-readme.md?raw'
-import type { ChatMessage } from '@/../service/src/chatgpt'
 
 const sleep = async (ms: number) => {
   return new Promise<void>((resolve) => {
