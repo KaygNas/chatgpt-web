@@ -54,7 +54,7 @@ const createStreamResponse = ({ markdownText, interval = 100 }: { markdownText: 
 }
 
 const handlers = [
-  http.post('/api/chat-process', async ({ request }) => {
+  http.post('/chatgpt-web/api/chat-process', async ({ request }) => {
     const requestData: any = await request.json()
     const agentUuid = requestData.options.agentUuid
     switch (agentUuid) {

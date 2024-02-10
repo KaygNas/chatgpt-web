@@ -9,7 +9,7 @@ const worker = setupWorker(...handlers)
 export const setupMsw = async () => {
   if (import.meta.env.PROD) {
     // TODO remove
-    await worker.start({ onUnhandledRequest: 'bypass', serviceWorker: { url: './mockServiceWorker.js' } })
+    await worker.start({ onUnhandledRequest: 'bypass', serviceWorker: { url: '/chatgpt-web/mockServiceWorker.js' } })
   }
   else {
     await worker.start({ onUnhandledRequest: 'bypass' })
