@@ -30,7 +30,7 @@ const agentStore = useAgentStore()
 const { isMobile } = useBasicLayout()
 const { addChat, updateChat, updateChatSome, getChatByUuidAndIndex } = useChat()
 const { scrollRef, scrollToBottom, scrollToBottomIfAtBottom } = useScroll()
-const { usingContext, toggleUsingContext } = useUsingContext()
+const { usingContext } = useUsingContext()
 
 const uuid = computed(() => Number(route.params.uuid))
 
