@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { setupMsw } from '../mocks'
 import App from './App.vue'
 import { setupI18n } from './locales'
 import { setupAssets, setupScrollbarStyle } from './plugins'
@@ -14,6 +15,8 @@ async function bootstrap() {
   setupStore(app)
 
   setupI18n(app)
+
+  await setupMsw()
 
   await setupRouter(app)
 

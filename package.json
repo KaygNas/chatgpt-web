@@ -54,6 +54,7 @@
     "less": "^4.1.3",
     "lint-staged": "^13.1.2",
     "markdown-it-link-attributes": "^4.0.1",
+    "msw": "^2.1.7",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "rimraf": "^4.3.0",
@@ -66,6 +67,11 @@
   "lint-staged": {
     "*.{ts,tsx,vue}": [
       "pnpm lint:fix"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }
